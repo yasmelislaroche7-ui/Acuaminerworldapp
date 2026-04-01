@@ -1,0 +1,129 @@
+.txpop-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  padding: 20px;
+  animation: txpop-fade 0.18s ease;
+}
+
+@keyframes txpop-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.txpop-modal {
+  background: #0c0c0c;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 32px 28px 28px;
+  max-width: 380px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  animation: txpop-up 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes txpop-up {
+  from { transform: translateY(24px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.txpop-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.txpop-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 8px;
+  letter-spacing: -0.3px;
+}
+
+.txpop-action {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.txpop-gas-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.55;
+  margin-bottom: 22px;
+  flex-shrink: 0;
+}
+
+.txpop-gas-warning svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.txpop-gas-warning strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+}
+
+.txpop-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.txpop-btn-cancel {
+  flex: 1;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 13px;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.txpop-btn-cancel:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.txpop-btn-confirm {
+  flex: 1;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 13px;
+  padding: 13px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.txpop-btn-confirm:hover {
+  background: #e8e8e8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.18);
+}
+
+@media (max-width: 480px) {
+  .txpop-modal { padding: 28px 20px 22px; }
+  .txpop-btns { flex-direction: column; }
+}

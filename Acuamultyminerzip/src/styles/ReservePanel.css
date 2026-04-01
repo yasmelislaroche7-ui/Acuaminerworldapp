@@ -1,0 +1,22 @@
+.reserve-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.reserve-panel h3 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.reserve-msg { background: var(--surface2); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; }
+
+.reserves-grid { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.reserve-token { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; }
+.reserve-amount { font-size: 18px; font-weight: 700; }
+
+.reserve-item { flex: 1; min-width: 160px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.reserve-token-info { display: flex; flex-direction: column; gap: 2px; }
+.reserve-addr { font-size: 10px; color: var(--text2); font-family: monospace; }
+.reserve-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.reserve-empty { color: var(--text2); font-size: 13px; text-align: center; padding: 24px; }
+
+.withdraw-form { border-top: 1px solid var(--border); padding-top: 16px; }
+.withdraw-form h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.withdraw-form .form-row { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.withdraw-form select { flex: 0 0 140px; width: auto; }
+
+.reserve-manage { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+.reserve-manage h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.reserve-manage-form .form-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }

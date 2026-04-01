@@ -1,0 +1,653 @@
+/* ─── Mining Panel ────────────────────────────────────────────────────── */
+.mining-wrapper {
+  margin-bottom: 32px;
+}
+
+.mining-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.mining-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00d4ff, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mining-badge {
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,58,237,0.15));
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: #00d4ff;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.tg-round-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #229ED9;
+  color: #fff;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.15s;
+  margin-left: auto;
+}
+.tg-round-btn:hover {
+  background: #1a8abf;
+  transform: scale(1.08);
+}
+
+/* ─── Main Card ──────────────────────────────────────────────────────── */
+.mining-card {
+  background: linear-gradient(135deg, #0a0e1a 0%, #0d1529 50%, #0a0e1a 100%);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 20px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mining-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(0,212,255,0.05) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 30%, rgba(124,58,237,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ─── Rig Visual ─────────────────────────────────────────────────────── */
+.mining-rig-visual {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.rig-frame {
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(0,212,255,0.25);
+  border-radius: 14px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 260px;
+}
+
+.rig-icon {
+  font-size: 40px;
+  filter: drop-shadow(0 0 12px rgba(0,212,255,0.6));
+  animation: rig-pulse 2s ease-in-out infinite;
+}
+
+@keyframes rig-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(0,212,255,0.5)); transform: scale(1); }
+  50%       { filter: drop-shadow(0 0 18px rgba(0,212,255,0.9)); transform: scale(1.05); }
+}
+
+.rig-lights {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rig-light {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+.rig-light:nth-child(2) { animation-delay: 0.4s; background: #00d4ff; box-shadow: 0 0 8px #00d4ff; }
+.rig-light:nth-child(3) { animation-delay: 0.8s; background: #7c3aed; box-shadow: 0 0 8px #7c3aed; }
+.rig-light:nth-child(4) { animation-delay: 1.2s; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+
+.rig-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rig-label {
+  font-size: 11px;
+  color: var(--text2, #8b9fc4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.rig-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0,212,255,0.5);
+}
+
+.rig-sublabel {
+  font-size: 11px;
+  color: var(--text2, #8b9fc4);
+}
+
+/* ─── Stats Row ──────────────────────────────────────────────────────── */
+.mining-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.mining-stat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mining-stat-label {
+  font-size: 11px;
+  color: var(--text2, #8b9fc4);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.mining-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text1, #e2e8f0);
+}
+
+.mining-stat-value.cyan  { color: #00d4ff; }
+.mining-stat-value.green { color: #10b981; }
+.mining-stat-value.purple{ color: #a78bfa; }
+
+.mining-stat-sub {
+  font-size: 11px;
+  color: var(--text2, #8b9fc4);
+}
+
+/* ─── Pending Rewards Box ────────────────────────────────────────────── */
+.mining-pending-box {
+  background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(0,212,255,0.08));
+  border: 1px solid rgba(16,185,129,0.25);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.pending-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #10b981;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pending-title::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: blink 1s ease-in-out infinite;
+}
+
+.pending-tokens {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.pending-token {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pending-token-name {
+  font-size: 12px;
+  color: var(--text2, #8b9fc4);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.pending-token-amount {
+  font-size: 24px;
+  font-weight: 800;
+  color: #10b981;
+  text-shadow: 0 0 12px rgba(16,185,129,0.4);
+}
+
+.pending-token-unit {
+  font-size: 12px;
+  color: var(--text2, #8b9fc4);
+}
+
+/* ─── Actions Row ────────────────────────────────────────────────────── */
+.mining-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.btn-mine {
+  background: linear-gradient(135deg, #00d4ff, #0095c8);
+  border: none;
+  border-radius: 12px;
+  padding: 13px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(0,212,255,0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-mine:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,212,255,0.5);
+}
+
+.btn-mine:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-boost {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  border: none;
+  border-radius: 12px;
+  padding: 13px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(124,58,237,0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-boost:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(124,58,237,0.5);
+}
+
+.btn-boost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-claim-mining {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 12px;
+  padding: 13px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-claim-mining:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16,185,129,0.5);
+}
+
+.btn-claim-mining:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── Not connected / no package ────────────────────────────────────── */
+.mining-empty {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.mining-empty-icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 16px rgba(0,212,255,0.4));
+}
+
+.mining-empty h3 {
+  font-size: 20px;
+  margin: 0 0 8px;
+  color: var(--text1, #e2e8f0);
+}
+
+.mining-empty p {
+  font-size: 14px;
+  color: var(--text2, #8b9fc4);
+  max-width: 380px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+
+.mining-price-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,212,255,0.1);
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #00d4ff;
+  margin-bottom: 24px;
+}
+
+/* ─── Message Banner ─────────────────────────────────────────────────── */
+.mining-msg {
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.mining-msg.success { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); color: #10b981; }
+.mining-msg.error   { background: rgba(239,68,68,0.1);   border: 1px solid rgba(239,68,68,0.25); color: #f87171; }
+.mining-msg.info    { background: rgba(0,212,255,0.08);  border: 1px solid rgba(0,212,255,0.2);  color: #00d4ff; }
+
+/* ─── Approve notice ─────────────────────────────────────────────────── */
+.approve-notice {
+  font-size: 12px;
+  color: var(--text2, #8b9fc4);
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* ─── Pool info bar ──────────────────────────────────────────────────── */
+.mining-pool-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.pool-chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--text2, #8b9fc4);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pool-chip strong {
+  color: var(--text1, #e2e8f0);
+  font-weight: 600;
+}
+
+/* ─── Mining Owner Admin ─────────────────────────────────────────────── */
+.mining-admin-section {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 8px;
+}
+
+.mining-admin-section h4 {
+  margin: 0 0 20px;
+  font-size: 16px;
+  color: #00d4ff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mining-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.mining-admin-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.mining-admin-card h5 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--text1, #e2e8f0);
+  font-weight: 600;
+}
+
+.mining-admin-card .input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.mining-admin-card input {
+  flex: 1;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: var(--text1, #e2e8f0);
+  outline: none;
+}
+
+.mining-admin-card input:focus {
+  border-color: rgba(0,212,255,0.4);
+}
+
+.live-counter {
+  font-variant-numeric: tabular-nums;
+  color: #10b981 !important;
+  text-shadow: 0 0 10px rgba(16,185,129,0.5) !important;
+  transition: color 0.1s;
+}
+
+/* ─── Block Mining Log ─────────────────────────────────────────────── */
+.block-log-wrapper {
+  margin-top: 24px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(0,212,255,0.15);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.block-log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  background: rgba(0,212,255,0.04);
+}
+
+.block-log-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #00d4ff;
+  letter-spacing: 0.5px;
+}
+
+.block-log-next {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text2, #8b9fc4);
+}
+
+.block-log-countdown {
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: #a78bfa;
+  min-width: 36px;
+}
+
+.block-progress-bar {
+  width: 80px;
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.block-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #00d4ff);
+  border-radius: 3px;
+  transition: width 0.5s linear;
+}
+
+/* ─── Block Cards Grid ───────────────────────────────────────────────── */
+.block-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  padding: 14px;
+}
+
+.block-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.2s, background 0.2s;
+  animation: blockFadeIn 0.4s ease;
+}
+
+@keyframes blockFadeIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+.block-card:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(0,212,255,0.25);
+}
+
+.block-card-latest {
+  background: rgba(0,212,255,0.06);
+  border-color: rgba(0,212,255,0.4);
+  box-shadow: 0 0 16px rgba(0,212,255,0.12);
+}
+
+.block-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.block-card-num {
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text1, #e2e8f0);
+}
+
+.block-card-new-badge {
+  background: linear-gradient(90deg, #00d4ff22, #7c3aed22);
+  border: 1px solid rgba(0,212,255,0.4);
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #00d4ff;
+  letter-spacing: 0.8px;
+}
+
+.block-card-hash {
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--text2, #8b9fc4);
+  word-break: break-all;
+}
+
+.block-card-rewards {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.block-card-h2o {
+  font-size: 11px;
+  font-weight: 600;
+  color: #00d4ff;
+  font-variant-numeric: tabular-nums;
+}
+
+.block-card-btch2o {
+  font-size: 11px;
+  font-weight: 600;
+  color: #a78bfa;
+  font-variant-numeric: tabular-nums;
+}
+
+.block-card-time {
+  font-size: 10px;
+  color: var(--text2, #8b9fc4);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .pending-tokens { grid-template-columns: 1fr; }
+  .mining-actions { flex-direction: column; }
+  .btn-mine, .btn-boost, .btn-claim-mining { width: 100%; justify-content: center; }
+  .rig-frame { min-width: unset; flex-direction: column; text-align: center; }
+  .block-cards-grid { grid-template-columns: repeat(2, 1fr); }
+}

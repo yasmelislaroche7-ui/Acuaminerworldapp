@@ -1,0 +1,198 @@
+.staking-page-connect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 75vh;
+}
+
+.staking-page {
+  padding-bottom: 48px;
+}
+
+.staking-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.staking-page-header h1 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+
+.staking-page-sub {
+  color: var(--text2);
+  font-size: 14px;
+}
+
+.staking-panels-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 640px) {
+  .staking-page-header {
+    flex-direction: column;
+  }
+}
+
+/* ── Positions Section ── */
+.staking-positions-section {
+  margin-top: 36px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.staking-positions-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.positions-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.positions-empty span {
+  font-size: 32px;
+}
+
+.positions-grid-user {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.position-card-user {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.position-nft-badge {
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.position-id {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.position-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ── Token Addresses Section ── */
+.staking-addresses-section {
+  margin-top: 28px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.staking-addresses-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.addresses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.address-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.address-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.address-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.address-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.06);
+  padding: 2px 7px;
+  border-radius: 4px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.address-code {
+  font-size: 11px;
+  font-family: monospace;
+  color: var(--text-secondary);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.address-link {
+  color: var(--text-secondary);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.address-link:hover {
+  color: var(--primary);
+}
+
+@media (max-width: 640px) {
+  .addresses-grid,
+  .positions-grid-user {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,29 @@
+.owner-panel { padding: 0; }
+.owner-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+.owner-header h1 { font-size: 24px; font-weight: 700; }
+.primary-badge { background: var(--accent)22; color: var(--accent2); border: 1px solid var(--accent)44; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 10px; }
+
+.tab-bar { display: flex; gap: 4px; margin-bottom: 20px; overflow-x: auto; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.tab-btn { background: none; color: var(--text2); padding: 8px 14px; border-radius: 8px 8px 0 0; font-size: 13px; font-weight: 500; border-bottom: 2px solid transparent; border-radius: 0; }
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent2); border-bottom-color: var(--accent); }
+
+.tab-content { }
+
+.owner-locked { text-align: center; padding: 80px 24px; }
+.owner-locked h2 { font-size: 24px; margin-bottom: 12px; }
+.owner-locked p { color: var(--text2); margin-bottom: 20px; }
+
+.positions-owner { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.positions-owner h3 { font-size: 18px; font-weight: 600; }
+.positions-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.pos-row { display: flex; align-items: center; gap: 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; }
+.pos-row span { flex: 1; font-weight: 600; }
+
+.contracts-info { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.contracts-info h3 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.info-grid { display: flex; flex-direction: column; gap: 12px; }
+.info-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; }
+.info-item label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.info-item a, .info-item span { font-family: monospace; font-size: 13px; word-break: break-all; }
+.external-links { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }

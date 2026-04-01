@@ -1,0 +1,21 @@
+.config-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.config-panel h3 { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+.config-panel.loading { color: var(--text2); font-style: italic; }
+.config-msg { background: var(--surface2); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; }
+
+.config-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.config-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.config-item label { text-transform: none; font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: 0; }
+.config-current { font-size: 12px; color: var(--text2); background: var(--bg); padding: 6px 10px; border-radius: 6px; }
+.config-input-row { display: flex; gap: 8px; }
+.config-input-row input { flex: 1; }
+
+.config-status { margin-top: 16px; }
+.status-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+.status-badge.active { background: var(--success)22; color: var(--success); border: 1px solid var(--success)44; }
+.status-badge.paused { background: var(--warn)22; color: var(--warn); border: 1px solid var(--warn)44; }
+
+.config-item.full-width { grid-column: 1 / -1; }
+.config-last { font-size: 12px; color: var(--text2); margin-left: 12px; align-self: center; }
+.config-status { margin-top: 0; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.config-hint { font-size: 11px; color: var(--text2); margin: 0; }

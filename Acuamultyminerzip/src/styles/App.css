@@ -1,0 +1,15 @@
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+.main-content { flex: 1; padding: 24px; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+.text-success { color: var(--success); }
+.text-warn { color: var(--warn); }
+.text-danger { color: var(--danger); }
+
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.section-header h2, .section-header h3 { font-size: 18px; font-weight: 600; }
+
+.form-row { display: flex; gap: 8px; align-items: center; }
+.form-row input, .form-row select { flex: 1; }
+
+.error-msg { color: var(--danger); font-size: 12px; margin-top: 8px; }
+.empty { color: var(--text2); font-style: italic; }

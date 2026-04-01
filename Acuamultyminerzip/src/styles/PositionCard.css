@@ -1,0 +1,176 @@
+.position-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 18px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.position-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+}
+
+.position-card.in-range::before { background: linear-gradient(90deg, var(--success), transparent); }
+.position-card.out-range::before { background: linear-gradient(90deg, var(--danger), transparent); }
+
+.position-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.position-card.loading {
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.position-loading-text {
+  color: var(--text2);
+  font-style: italic;
+  font-size: 13px;
+}
+
+.position-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.position-id-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.position-id {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.fees-dot {
+  color: var(--warn);
+  font-size: 10px;
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.range-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+.range-badge.in {
+  background: rgba(34,197,94,0.12);
+  color: var(--success);
+  border: 1px solid rgba(34,197,94,0.25);
+}
+.range-badge.out {
+  background: rgba(239,68,68,0.12);
+  color: var(--danger);
+  border: 1px solid rgba(239,68,68,0.25);
+}
+
+.position-pool {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.pool-tokens {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.token-pill {
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-family: monospace;
+  color: var(--text2);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.token-pill:hover {
+  color: var(--accent2);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.pool-sep { color: var(--text3); font-size: 12px; }
+
+.fee-tier {
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(14,165,233,0.1);
+  color: var(--accent2);
+  border: 1px solid rgba(14,165,233,0.2);
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.position-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.detail-row span:first-child { color: var(--text2); }
+
+.fees-row {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.fees-values {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: monospace;
+}
+
+.fee-value { font-size: 12px; color: var(--text2); }
+.fee-value.has-fees { color: var(--accent2); font-weight: 600; }
+.fees-sep { color: var(--text3); }
+
+.position-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
