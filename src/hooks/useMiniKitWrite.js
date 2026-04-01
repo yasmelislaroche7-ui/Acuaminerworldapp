@@ -1,57 +1,62 @@
 import { useState } from "react";
 import { MiniKit } from "@worldcoin/minikit-js";
-
-function serializeArgs(args) {
-  if (!args || !Array.isArray(args)) return [];
-  return args.map((arg) => {
-    if (typeof arg === "bigint") return arg.toString();
-    if (Array.isArray(arg)) return serializeArgs(arg);
-    return arg;
-  });
-}
+import { encodeFunctionData } from "viem";
+import { toast } from "../context/ToastContext.jsx";
 
 export function useMiniKitWrite() {
   const [isPending, setIsPending] = useState(false);
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
+  const [data, setData]           = useState(null);
+  const [error, setError]         = useState(null);
 
-  const writeContractAsync = async ({ address, abi, functionName, args = [] }) => {
+  const writeContractAsync = async ({
+    address,
+    abi,
+    functionName,
+    args = [],
+    value,
+  }) => {
     setIsPending(true);
     setData(null);
     setError(null);
+
     try {
-      const { finalPayload } = await MiniKit.commandsAsync.sendTransaction({
-        transaction: [
-          {
-            address,
-            abi,
-            functionName,
-            args: serializeArgs(args),
-          },
-        ],
+      const isMiniKit = (() => { try { return MiniKit.isInstalled(); } catch { return false; } })();
+      if (!isMiniKit) {
+        throw new Error("Abre esta app dentro de World App para firmar transacciones.");
+      }
+
+      toast("Enviando transacción a World App...", "info", 10000);
+
+      const calldata = encodeFunctionData({ abi, functionName, args });
+
+      const txEntry = { to: address, data: calldata };
+      if (value !== undefined && value !== null && value !== 0n) {
+        txEntry.value = "0x" + BigInt(value).toString(16);
+      }
+
+      const response = await MiniKit.sendTransaction({
+        transactions: [txEntry],
       });
 
-      if (!finalPayload || finalPayload.status === "error") {
-        const msg = finalPayload?.message || "Transacción rechazada";
-        const err = new Error(msg);
-        err.shortMessage = msg;
-        setError(err);
-        throw err;
+      const txId = response?.result?.transaction_id;
+
+      if (!txId) {
+        throw new Error("Transacción rechazada o cancelada en World App.");
       }
 
-      const txHash = finalPayload?.transaction_id;
-      if (!txHash) {
-        const err = new Error("No se recibió el hash de transacción");
-        err.shortMessage = "No se recibió el hash de transacción";
-        setError(err);
-        throw err;
-      }
-
-      setData(txHash);
-      return txHash;
+      setData(txId);
+      toast("Transacción enviada. Esperando confirmación...", "success", 5000);
+      return txId;
     } catch (err) {
-      setError(err);
-      throw err;
+      const msg = err?.message?.includes("User rejected") || err?.message?.includes("cancelada")
+        ? "Transacción cancelada por el usuario."
+        : err?.shortMessage || err?.message || "Error al enviar la transacción.";
+
+      const errObj = new Error(msg);
+      errObj.shortMessage = msg;
+      setError(errObj);
+      toast(msg, "error", 6000);
+      throw errObj;
     } finally {
       setIsPending(false);
     }

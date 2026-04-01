@@ -1,4 +1,5 @@
 import { createContext, useContext, useRef, useState, useCallback } from "react";
+import { toast } from "./ToastContext.jsx";
 
 const TxConfirmContext = createContext(null);
 
@@ -18,11 +19,13 @@ export function TxConfirmProvider({ children }) {
   const handleConfirm = () => {
     setVisible(false);
     resolveRef.current?.(true);
+    toast("Abriendo World App para firmar...", "info", 6000);
   };
 
   const handleCancel = () => {
     setVisible(false);
     resolveRef.current?.(false);
+    toast("Transacción cancelada.", "warning", 3000);
   };
 
   return (
@@ -51,7 +54,7 @@ export function TxConfirmProvider({ children }) {
                 <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 4a1 1 0 011 1v4a1 1 0 11-2 0V7a1 1 0 011-1zm0 8a1 1 0 100-2 1 1 0 000 2z" />
               </svg>
               <span>
-                Necesitas <strong>ETH en tu wallet</strong> para pagar el gas. Si no tienes suficiente ETH, la transacción fallará.
+                Necesitas <strong>ETH en tu wallet</strong> para pagar el gas. World App abrirá una ventana de confirmación.
               </span>
             </div>
 
