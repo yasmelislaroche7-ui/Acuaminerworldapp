@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useAccount } from "wagmi";
+import { useWallet } from "../context/WalletContext.jsx";
 import StakingPanel from "../components/StakingPanel.jsx";
-import WorldConnectBtn from "../components/WorldConnectBtn.jsx";
 import { ACUA_STAKING_ADDRESS } from "../config/staking.js";
 import { USDC_TOKEN_ADDRESS,  USDC_STAKING_ADDRESS  } from "../config/usdc.js";
 import { WLD_TOKEN_ADDRESS,   WLD_STAKING_ADDRESS   } from "../config/wld.js";
@@ -87,75 +86,8 @@ function TokenAddressesSection() {
   );
 }
 
-function PositionsSection() {
-  const { data: positions } = useContractRead("getManagedPositions", [], true);
-  const [copied, setCopied] = useState(null);
-
-  const handleCopy = (id) => {
-    navigator.clipboard.writeText(id.toString()).then(() => {
-      setCopied(id.toString());
-      setTimeout(() => setCopied(null), 2000);
-    });
-  };
-
-  if (!positions || positions.length === 0) {
-    return (
-      <div className="staking-positions-section">
-        <h2>📍 Mis Posiciones Activas en el Pool</h2>
-        <div className="positions-empty">
-          <span>📭</span>
-          <p>No hay posiciones gestionadas por el bot actualmente.</p>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="staking-positions-section">
-      <h2>📍 Mis Posiciones Activas en el Pool</h2>
-      <p style={{ color: "var(--text-secondary)", fontSize: 14, marginBottom: 16 }}>
-        Posiciones Uniswap V3 actualmente gestionadas. Copia el ID del NFT para importarlo o verificarlo.
-      </p>
-      <div className="positions-grid-user">
-        {positions.map(id => {
-          const idStr = id.toString();
-          const isCopied = copied === idStr;
-          return (
-            <div key={idStr} className="position-card-user">
-              <div className="position-nft-badge">NFT</div>
-              <div className="position-id">#{idStr}</div>
-              <div className="position-actions">
-                <button
-                  className={`btn-sm ${isCopied ? "btn-success" : "btn-secondary"}`}
-                  onClick={() => handleCopy(id)}
-                >
-                  {isCopied ? "✅ Copiado" : "📋 Copiar ID"}
-                </button>
-                <a
-                  href={`https://app.uniswap.org/positions/${idStr}`}
-                  target="_blank" rel="noreferrer"
-                  className="btn-sm btn-secondary"
-                >
-                  Uniswap ↗
-                </a>
-                <a
-                  href={`https://worldscan.org/token/0xec12a9F9a09f50550686363766Cc153D03c27b5e?a=${idStr}`}
-                  target="_blank" rel="noreferrer"
-                  className="btn-sm btn-secondary"
-                >
-                  Worldscan ↗
-                </a>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 export default function StakingPage() {
-  const { isConnected } = useAccount();
+  const { isConnected, isConnecting, error, connect } = useWallet();
 
   if (!isConnected) {
     return (
@@ -165,7 +97,19 @@ export default function StakingPage() {
           <h1>Acua Company Staking</h1>
           <h2>Gana recompensas por hacer stake</h2>
           <p>Conecta tu wallet para ver tus posiciones de staking, depositar, retirar y reclamar recompensas.</p>
-          <WorldConnectBtn />
+          {error && (
+            <div style={{ color: "#f87171", fontSize: 13, margin: "12px 0", padding: "8px 12px", background: "rgba(248,113,113,0.1)", borderRadius: 8, border: "1px solid rgba(248,113,113,0.3)" }}>
+              {error}
+            </div>
+          )}
+          <button className="connect-world-app-btn" onClick={connect} disabled={isConnecting}>
+            <svg viewBox="0 0 40 40" width="20" height="20">
+              <circle cx="20" cy="20" r="19" fill="#000" stroke="#fff" strokeWidth="2"/>
+              <circle cx="20" cy="20" r="11" fill="none" stroke="#fff" strokeWidth="2.5"/>
+              <circle cx="20" cy="20" r="4" fill="#fff"/>
+            </svg>
+            {isConnecting ? "Conectando..." : "Conectar con World App"}
+          </button>
         </div>
       </div>
     );

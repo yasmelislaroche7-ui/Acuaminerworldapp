@@ -1,7 +1,9 @@
-import { useReadContract, useWriteContract, useWaitForTransactionReceipt, useAccount } from "wagmi";
+import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
 import { parseGwei, getAddress } from "viem";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../config/contract.js";
 import { useTxConfirm } from "../context/TxConfirmContext.jsx";
+import { useWallet } from "../context/WalletContext.jsx";
+import { useMiniKitWrite } from "./useMiniKitWrite.js";
 
 export const GAS_PARAMS = {
   gas:                    500_000n,
@@ -20,7 +22,7 @@ export function useContractRead(functionName, args = [], watch = false) {
 }
 
 export function useContractWrite() {
-  const { writeContractAsync, data: hash, isPending, error } = useWriteContract();
+  const { writeContractAsync, data: hash, isPending, error } = useMiniKitWrite();
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
   const { confirmTx } = useTxConfirm();
 
@@ -34,7 +36,6 @@ export function useContractWrite() {
       abi: CONTRACT_ABI,
       functionName,
       args,
-      ...GAS_PARAMS,
     });
   };
 
@@ -42,7 +43,7 @@ export function useContractWrite() {
 }
 
 export function useIsOwner() {
-  const { address } = useAccount();
+  const { address } = useWallet();
   const { data } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
@@ -54,7 +55,7 @@ export function useIsOwner() {
 }
 
 export function useIsPrimaryOwner() {
-  const { address } = useAccount();
+  const { address } = useWallet();
   const { data } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,

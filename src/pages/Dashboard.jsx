@@ -1,40 +1,11 @@
-import { useState } from "react";
-import { useAccount, useConnect } from "wagmi";
-import { injected } from "wagmi/connectors";
-import { MiniKit } from "@worldcoin/minikit-js";
+import { useWallet } from "../context/WalletContext.jsx";
 import MiningPanel from "../components/MiningPanel.jsx";
 import TransactionList from "../components/TransactionList.jsx";
-import WorldAppModal from "../components/WorldAppModal.jsx";
 import InfoSection from "../components/InfoSection.jsx";
 import "../styles/Dashboard.css";
-import "../styles/WorldAppModal.css";
 
 export default function Dashboard() {
-  const { isConnected } = useAccount();
-  const { connect } = useConnect();
-  const [showWorldModal, setShowWorldModal] = useState(false);
-
-  const isInMiniKit = (() => { try { return MiniKit.isInstalled(); } catch { return false; } })();
-
-  const handleWorldAppConnect = async () => {
-    if (isInMiniKit) {
-      try {
-        const nonce = Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
-        const { finalPayload } = await MiniKit.commandsAsync.walletAuth({
-          nonce,
-          statement: "Conecta tu wallet a Acua Company en World Chain",
-          expirationTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        });
-        if (finalPayload?.status === "success") {
-          connect({ connector: injected() });
-        }
-      } catch (err) {
-        console.error("walletAuth error:", err);
-      }
-    } else {
-      setShowWorldModal(true);
-    }
-  };
+  const { isConnected, isConnecting, error, connect } = useWallet();
 
   if (!isConnected) {
     return (
@@ -49,14 +20,20 @@ export default function Dashboard() {
               hacer stake, minar H2O y BTCH2O, y reinvertir recompensas automáticamente.
             </p>
 
+            {error && (
+              <div style={{ color: "#f87171", fontSize: 13, marginBottom: 12, padding: "8px 12px", background: "rgba(248,113,113,0.1)", borderRadius: 8, border: "1px solid rgba(248,113,113,0.3)" }}>
+                {error}
+              </div>
+            )}
+
             <div className="connect-wallet-options">
-              <button className="connect-world-app-btn" onClick={handleWorldAppConnect}>
+              <button className="connect-world-app-btn" onClick={connect} disabled={isConnecting}>
                 <svg viewBox="0 0 40 40" width="22" height="22">
                   <circle cx="20" cy="20" r="19" fill="#000" stroke="#fff" strokeWidth="2"/>
                   <circle cx="20" cy="20" r="11" fill="none" stroke="#fff" strokeWidth="2.5"/>
                   <circle cx="20" cy="20" r="4" fill="#fff"/>
                 </svg>
-                Conectar con World App
+                {isConnecting ? "Conectando..." : "Conectar con World App"}
               </button>
             </div>
 
@@ -70,8 +47,6 @@ export default function Dashboard() {
         </div>
 
         <InfoSection />
-
-        {showWorldModal && <WorldAppModal onClose={() => setShowWorldModal(false)} />}
       </div>
     );
   }

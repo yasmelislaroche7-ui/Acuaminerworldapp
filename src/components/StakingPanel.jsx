@@ -1,7 +1,9 @@
 import { useState } from "react";
 import {
-  useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt
+  useReadContract, useWaitForTransactionReceipt
 } from "wagmi";
+import { useWallet } from "../context/WalletContext.jsx";
+import { useMiniKitWrite } from "../hooks/useMiniKitWrite.js";
 import { formatUnits, parseUnits, parseGwei, getAddress } from "viem";
 import { ACUA_STAKING_ADDRESS, STAKING_ABI, ERC20_ABI } from "../config/staking.js";
 import { SUSHI_TOKEN_ADDRESS, SUSHI_STAKING_ADDRESS, SUSHI_TOKEN_ABI, SUSHI_STAKING_ABI } from "../config/sushi.js";
@@ -67,7 +69,7 @@ function TxMsg({ msg }) {
 }
 
 function ApproveBtn({ tokenAddress, spender, label, onDone }) {
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading } = useWaitForTransactionReceipt({ hash });
   const [msg, setMsg] = useState("");
@@ -100,7 +102,7 @@ function ApproveBtn({ tokenAddress, spender, label, onDone }) {
 
 // ─── ACUA / H2O STAKING ───────────────────────────────────────────────────────
 function AcuaStakingCard() {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected } = useWallet();
   const userAddr = address ?? ZERO_ADDR;
 
   const minERC20 = [
@@ -120,7 +122,7 @@ function AcuaStakingCard() {
   const { data: tokenBalance,   refetch: refetchBalance }   = useReadContract({ address: stakingToken, abi: minERC20, functionName: "balanceOf",  args: [userAddr], query: { refetchInterval: 8000, enabled: !!stakingToken && !!address } });
   const { data: allowance,      refetch: refetchAllowance } = useReadContract({ address: stakingToken, abi: minERC20, functionName: "allowance", args: [userAddr, ACUA_STAKING_ADDRESS], query: { refetchInterval: 8000, enabled: !!stakingToken && !!address } });
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash });
   const [stakeAmt, setStakeAmt]     = useState("");
@@ -223,7 +225,7 @@ function AcuaStakingCard() {
 
 // ─── TIME STAKING ─────────────────────────────────────────────────────────────
 function TimeStakingCard() {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected } = useWallet();
   const userAddr = address ?? ZERO_ADDR;
 
   const { data: stakedBalance, refetch: refetchStaked }   = useReadContract({ address: TIME_STAKING_ADDRESS, abi: TIME_STAKING_ABI, functionName: "stakedBalance",  args: [userAddr], query: { refetchInterval: 8000, enabled: !!address } });
@@ -237,7 +239,7 @@ function TimeStakingCard() {
     functionName: "balanceOf", args: [userAddr], query: { refetchInterval: 8000, enabled: !!address },
   });
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash });
   const [stakeAmt, setStakeAmt]     = useState("");
@@ -340,7 +342,7 @@ function TimeStakingCard() {
 
 // ─── SUSHI STAKING ────────────────────────────────────────────────────────────
 function SushiStakingCard() {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected } = useWallet();
   const userAddr = address ?? ZERO_ADDR;
 
   const { data: userInfo, refetch: refetchInfo }         = useReadContract({ address: SUSHI_STAKING_ADDRESS, abi: SUSHI_STAKING_ABI, functionName: "getUserInfo",   args: [userAddr], query: { refetchInterval: 8000, enabled: !!address } });
@@ -348,7 +350,7 @@ function SushiStakingCard() {
   const { data: sushiBalance, refetch: refetchBalance }  = useReadContract({ address: SUSHI_TOKEN_ADDRESS, abi: SUSHI_TOKEN_ABI, functionName: "balanceOf", args: [userAddr], query: { refetchInterval: 8000, enabled: !!address } });
   const { data: allowance,   refetch: refetchAllowance } = useReadContract({ address: SUSHI_TOKEN_ADDRESS, abi: SUSHI_TOKEN_ABI, functionName: "allowance", args: [userAddr, SUSHI_STAKING_ADDRESS], query: { refetchInterval: 8000, enabled: !!address } });
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash });
   const [stakeAmt,   setStakeAmt]   = useState("");
@@ -456,7 +458,7 @@ function SushiStakingCard() {
 
 // ─── AIR STAKING CARD (with inline fundPool for owner2) ──────────────────────
 function AirStakingCard() {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected } = useWallet();
   const userAddr = address ?? ZERO_ADDR;
 
   const minERC20 = [
@@ -473,7 +475,7 @@ function AirStakingCard() {
   const { data: tokenBalance,   refetch: refetchBalance }  = useReadContract({ address: AIR_TOKEN_ADDRESS, abi: minERC20, functionName: "balanceOf",  args: [userAddr], query: { refetchInterval: 8000, enabled: !!address } });
   const { data: allowance,      refetch: refetchAllowance }= useReadContract({ address: AIR_TOKEN_ADDRESS, abi: minERC20, functionName: "allowance",  args: [userAddr, AIR_STAKING_ADDRESS], query: { refetchInterval: 8000, enabled: !!address } });
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash });
   const [stakeAmt, setStakeAmt]     = useState("");
@@ -619,7 +621,7 @@ function AirStakingCard() {
 
 // ─── GENERIC STAKE CARD (USDC / WLD / WARS / WCOP / BTCH2O) ─────────────────
 function GenericStakingCard({ name, label, labelClass, tokenAddress, tokenAbi, stakingAddress, stakingAbi, decimals = 18 }) {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected } = useWallet();
   const userAddr = address ?? ZERO_ADDR;
 
   const minERC20 = [
@@ -637,7 +639,7 @@ function GenericStakingCard({ name, label, labelClass, tokenAddress, tokenAbi, s
   const { data: tokenBalance,   refetch: refetchBalance }  = useReadContract({ address: tokenAddress, abi: minERC20, functionName: "balanceOf",  args: [userAddr], query: { refetchInterval: 8000, enabled: !!address } });
   const { data: allowance,      refetch: refetchAllowance }= useReadContract({ address: tokenAddress, abi: minERC20, functionName: "allowance",  args: [userAddr, stakingAddress], query: { refetchInterval: 8000, enabled: !!address } });
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash });
   const [stakeAmt, setStakeAmt]     = useState("");

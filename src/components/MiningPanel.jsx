@@ -1,17 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
 import { formatUnits, parseGwei } from "viem";
 import {
   MINING_ADDRESS, MINING_ABI, ERC20_MINIMAL_ABI,
   WLD_TOKEN_ADDRESS, H2O_TOKEN_ADDRESS, BTCH2O_TOKEN_ADDRESS
 } from "../config/mining.js";
+import { useWallet } from "../context/WalletContext.jsx";
+import { useMiniKitWrite } from "../hooks/useMiniKitWrite.js";
 import "../styles/MiningPanel.css";
-
-const GAS = {
-  gas: 700_000n,
-  maxFeePerGas: parseGwei("0.003"),
-  maxPriorityFeePerGas: parseGwei("0.001"),
-};
 
 const MAXUINT256 = BigInt("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 const ZERO = "0x0000000000000000000000000000000000000000";
@@ -97,8 +93,8 @@ function BlockLog({ blocks, nextBlockIn }) {
 }
 
 export default function MiningPanel() {
-  const { address: userAddr, isConnected } = useAccount();
-  const { writeContractAsync, isPending }  = useWriteContract();
+  const { address: userAddr, isConnected } = useWallet();
+  const { writeContractAsync, isPending }  = useMiniKitWrite();
   const [txHash, setTxHash]  = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash: txHash });
   const [msg, setMsg] = useState("");
@@ -211,17 +207,17 @@ export default function MiningPanel() {
 
   const handleApproveWLD = () => exec(() => writeContractAsync({
     address: WLD_TOKEN_ADDRESS, abi: ERC20_MINIMAL_ABI,
-    functionName: "approve", args: [MINING_ADDRESS, MAXUINT256], ...GAS
+    functionName: "approve", args: [MINING_ADDRESS, MAXUINT256],
   }));
 
   const handleBuyPackage = () => exec(() => writeContractAsync({
     address: MINING_ADDRESS, abi: MINING_ABI,
-    functionName: "buyPackage", args: [1n], ...GAS
+    functionName: "buyPackage", args: [1n],
   }));
 
   const handleClaim = () => exec(() => writeContractAsync({
     address: MINING_ADDRESS, abi: MINING_ABI,
-    functionName: "claimRewards", args: [], ...GAS
+    functionName: "claimRewards", args: [],
   }));
 
   if (!isConnected) return null;

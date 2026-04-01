@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useAccount } from "wagmi";
+import { useWallet } from "../context/WalletContext.jsx";
 import { MINING_ADDRESS, H2O_TOKEN_ADDRESS, BTCH2O_TOKEN_ADDRESS, WLD_TOKEN_ADDRESS } from "../config/mining.js";
 import "../styles/TransactionList.css";
 
@@ -114,7 +114,7 @@ async function fetchTxs(address) {
 }
 
 export default function TransactionList() {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected } = useWallet();
   const [txs,      setTxs]      = useState([]);
   const [loading,  setLoading]  = useState(false);
   const [error,    setError]    = useState(null);

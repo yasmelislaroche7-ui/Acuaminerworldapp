@@ -1,7 +1,9 @@
-import { useReadContract, useWriteContract, useWaitForTransactionReceipt, useAccount } from "wagmi";
+import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
 import { ACUA_STAKING_ADDRESS, STAKING_ABI, ERC20_ABI } from "../config/staking.js";
 import { maxUint256 } from "viem";
 import { useTxConfirm } from "../context/TxConfirmContext.jsx";
+import { useWallet } from "../context/WalletContext.jsx";
+import { useMiniKitWrite } from "./useMiniKitWrite.js";
 
 export function useStakingRead(address, functionName, args = []) {
   return useReadContract({
@@ -24,7 +26,7 @@ export function useERC20Read(tokenAddress, functionName, args = []) {
 }
 
 export function useStakingWrite() {
-  const { writeContractAsync, data: hash, isPending, error } = useWriteContract();
+  const { writeContractAsync, data: hash, isPending, error } = useMiniKitWrite();
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash });
   const { confirmTx } = useTxConfirm();
 
@@ -39,7 +41,7 @@ export function useStakingWrite() {
 }
 
 export function useApprove() {
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const { confirmTx } = useTxConfirm();
 
   const approve = async (tokenAddress, spender, amount = maxUint256) => {
@@ -57,7 +59,7 @@ export function useApprove() {
 }
 
 export function useAcuaStaking() {
-  const { address } = useAccount();
+  const { address } = useWallet();
   const userAddr = address ?? "0x0000000000000000000000000000000000000000";
 
   const { data: stakingToken } = useStakingRead(ACUA_STAKING_ADDRESS, "stakingToken");

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
-import WorldConnectBtn from "../components/WorldConnectBtn.jsx";
+import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
+import { useWallet } from "../context/WalletContext.jsx";
+import { useMiniKitWrite } from "../hooks/useMiniKitWrite.js";
 import { parseGwei, parseUnits, formatUnits, getAddress } from "viem";
 import { useIsOwner, useIsPrimaryOwner } from "../hooks/useContract.js";
 import ReservePanel from "../components/ReservePanel.jsx";
@@ -39,7 +40,7 @@ function fmt(val, dec = 18, dp = 4) {
 
 // ─── SIMPLE STAKING ADMIN CARD ─────────────────────────────────────────────────
 function SimpleStakingAdminCard({ name, symbol, stakingAddr, tokenAddr, decimals, abi }) {
-  const { address: userAddr } = useAccount();
+  const { address: userAddr } = useWallet();
 
   const { data: aprBps,       refetch: refetchApr }  = useReadContract({ address: stakingAddr, abi, functionName: "aprBps",        query: { refetchInterval: 30000 } });
   const { data: depositFee,   refetch: refetchFees } = useReadContract({ address: stakingAddr, abi, functionName: "depositFeeBps", query: { refetchInterval: 30000 } });
@@ -50,7 +51,7 @@ function SimpleStakingAdminCard({ name, symbol, stakingAddr, tokenAddr, decimals
   const { data: ownerBal,      refetch: refetchOwnerBal }   = useReadContract({ address: tokenAddr, abi: ERC20_ABI, functionName: "balanceOf", args: [userAddr ?? ZERO_ADDR], query: { refetchInterval: 10000, enabled: !!userAddr } });
   const { data: allowance,     refetch: refetchAllowance }  = useReadContract({ address: tokenAddr, abi: ERC20_ABI, functionName: "allowance", args: [userAddr ?? ZERO_ADDR, stakingAddr], query: { refetchInterval: 10000, enabled: !!userAddr } });
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash });
 
@@ -181,7 +182,7 @@ function StakingAdminPanel() {
 // ─── AIR OWNER2 MANAGEMENT ────────────────────────────────────────────────────
 function AirOwner2ManageSection() {
   const { data: currentOwner2 } = useReadContract({ address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "owner2", query: { refetchInterval: 15000 } });
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash });
   const [newOwner2, setNewOwner2] = useState("");
@@ -247,7 +248,7 @@ function AirOwner2ManageSection() {
 
 // ─── ACUA FUND REWARDS PANEL ──────────────────────────────────────────────────
 function AcuaFundRewardsPanel() {
-  const { address } = useAccount();
+  const { address } = useWallet();
   const userAddr = address ?? ZERO_ADDR;
 
   const minERC20 = [
@@ -266,7 +267,7 @@ function AcuaFundRewardsPanel() {
   const { data: contractBalance, refetch: refetchContractBalance } = useReadContract({ address: stakingToken, abi: minERC20, functionName: "balanceOf", args: [ACUA_STAKING_ADDRESS], query: { refetchInterval: 10000, enabled: !!stakingToken } });
   const { data: allowance,       refetch: refetchAllowance }       = useReadContract({ address: stakingToken, abi: minERC20, functionName: "allowance", args: [userAddr, ACUA_STAKING_ADDRESS], query: { refetchInterval: 10000, enabled: !!stakingToken && !!address } });
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [hash, setHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash });
   const [fundAmt, setFundAmt] = useState("");
@@ -351,7 +352,7 @@ function AcuaFundRewardsPanel() {
 
 // ─── MINING ADMIN PANEL ──────────────────────────────────────────────────────
 function MiningAdminPanel() {
-  const { address: userAddr } = useAccount();
+  const { address: userAddr } = useWallet();
   const ZERO = "0x0000000000000000000000000000000000000000";
 
   const { data: priceWLD,    refetch: refetchPrice }  = useReadContract({ address: MINING_ADDRESS, abi: MINING_ABI, functionName: "packagePriceWLD",   query: { refetchInterval: 30000 } });
@@ -369,7 +370,7 @@ function MiningAdminPanel() {
   const { data: h2oAllowance,    refetch: rH2OAllow }   = useReadContract({ address: H2O_TOKEN_ADDRESS,    abi: ERC20_MINIMAL_ABI, functionName: "allowance", args: [userAddr ?? ZERO, MINING_ADDRESS], query: { refetchInterval: 10000, enabled: !!userAddr } });
   const { data: btch2oAllowance, refetch: rBTCH2OAllow }= useReadContract({ address: BTCH2O_TOKEN_ADDRESS, abi: ERC20_MINIMAL_ABI, functionName: "allowance", args: [userAddr ?? ZERO, MINING_ADDRESS], query: { refetchInterval: 10000, enabled: !!userAddr } });
 
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useMiniKitWrite();
   const [txHash, setTxHash] = useState(null);
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash: txHash });
   const busy = isPending || isConfirming;
@@ -535,7 +536,7 @@ const TABS = [
 ];
 
 export default function OwnerPanel() {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected } = useWallet();
   const isOwner   = useIsOwner();
   const isPrimary = useIsPrimaryOwner();
   const [tab, setTab] = useState("mining");
@@ -544,11 +545,20 @@ export default function OwnerPanel() {
   const { data: wld }     = useContractRead("WLD");
   const { data: primary } = useContractRead("primaryOwner");
 
+  const { connect, isConnecting } = useWallet();
+
   if (!isConnected) return (
     <div className="owner-locked">
       <h2>🔒 Acceso Restringido</h2>
       <p>Conecta tu wallet para continuar.</p>
-      <WorldConnectBtn />
+      <button className="connect-world-app-btn" onClick={connect} disabled={isConnecting} style={{ marginTop: 16 }}>
+        <svg viewBox="0 0 40 40" width="20" height="20">
+          <circle cx="20" cy="20" r="19" fill="#000" stroke="#fff" strokeWidth="2"/>
+          <circle cx="20" cy="20" r="11" fill="none" stroke="#fff" strokeWidth="2.5"/>
+          <circle cx="20" cy="20" r="4" fill="#fff"/>
+        </svg>
+        {isConnecting ? "Conectando..." : "Conectar con World App"}
+      </button>
     </div>
   );
 
