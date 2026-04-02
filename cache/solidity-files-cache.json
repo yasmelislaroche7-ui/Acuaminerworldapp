@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/runner/workspace/contracts/BTCH2OStaking.sol": {
-      "lastModificationDate": 1775146329484,
+      "lastModificationDate": 1775154749022,
       "contentHash": "710781cafee91e59b6e3ce61ec4cb02c",
       "sourceName": "contracts/BTCH2OStaking.sol",
       "solcConfig": {
@@ -40,7 +40,7 @@
       ]
     },
     "/home/runner/workspace/contracts/FIREStaking.sol": {
-      "lastModificationDate": 1775146329484,
+      "lastModificationDate": 1775154749022,
       "contentHash": "dac79e923e7ba5a09422a0e6e77e9a53",
       "sourceName": "contracts/FIREStaking.sol",
       "solcConfig": {
@@ -78,7 +78,7 @@
       ]
     },
     "/home/runner/workspace/contracts/H2OMining.sol": {
-      "lastModificationDate": 1775146329484,
+      "lastModificationDate": 1775154749022,
       "contentHash": "e58e26c5feef2cab5bcb81be451fa5a3",
       "sourceName": "contracts/H2OMining.sol",
       "solcConfig": {
@@ -116,8 +116,8 @@
       ]
     },
     "/home/runner/workspace/contracts/UTH2Mining.sol": {
-      "lastModificationDate": 1775149670471,
-      "contentHash": "16d3b67247694b27ed6595c6f68e652c",
+      "lastModificationDate": 1775156596302,
+      "contentHash": "d1956fcb9629aad5939154d59a22d2b7",
       "sourceName": "contracts/UTH2Mining.sol",
       "solcConfig": {
         "version": "0.8.20",

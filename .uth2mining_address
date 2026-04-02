@@ -1,7 +1,8 @@
 {
-  "address": "0x8e934842EF39777d072e25c8bb67702FB7E81854",
+  "address": "0x15D65278b124fF544C1dcf279Cf008Ca24A99bE1",
   "uth2": "0x9eA8653640E22A5b69887985BB75d496dc97022a",
   "btch2o": "0xEcC4dAe4DC3D359a93046bd944e9ee3421A6A484",
+  "owner2": "0x5474c309e985c6b4fc623acf01ade604da781e52",
   "abi": [
     {
       "inputs": [
@@ -13,6 +14,11 @@
         {
           "internalType": "address",
           "name": "_btch2o",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_owner2",
           "type": "address"
         },
         {
@@ -28,6 +34,32 @@
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner1",
+          "type": "address"
+        }
+      ],
+      "name": "Owner1Transferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner2",
+          "type": "address"
+        }
+      ],
+      "name": "Owner2Changed",
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -89,13 +121,51 @@
       "anonymous": false,
       "inputs": [
         {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
           "indexed": false,
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "funder",
+          "type": "address"
         }
       ],
       "name": "PoolFunded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        }
+      ],
+      "name": "RewardTokenAdded",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        }
+      ],
+      "name": "RewardTokenRemoved",
       "type": "event"
     },
     {
@@ -112,6 +182,12 @@
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
         }
       ],
       "name": "RewardsClaimed",
@@ -144,16 +220,16 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "btch2o",
-      "outputs": [
+      "inputs": [
         {
-          "internalType": "contract IERC20",
-          "name": "",
+          "internalType": "address",
+          "name": "token",
           "type": "address"
         }
       ],
-      "stateMutability": "view",
+      "name": "addRewardToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -184,6 +260,11 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        },
+        {
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
@@ -192,6 +273,24 @@
       "name": "fundPool",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getContractBalances",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "balances",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {
@@ -207,6 +306,19 @@
           "internalType": "uint256[7]",
           "name": "rates",
           "type": "uint256[7]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getRewardTokens",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
         }
       ],
       "stateMutability": "view",
@@ -243,7 +355,7 @@
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "ratePerYear",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -251,8 +363,40 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "isRewardToken",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
-      "name": "owner",
+      "name": "owner1",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner2",
       "outputs": [
         {
           "internalType": "address",
@@ -320,6 +464,32 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "primaryToken",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
+        }
+      ],
+      "name": "removeRewardToken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -340,6 +510,25 @@
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "rewardTokens",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "uint256[7]",
           "name": "prices",
           "type": "uint256[7]"
@@ -351,6 +540,19 @@
         }
       ],
       "name": "setAllPackages",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner2",
+          "type": "address"
+        }
+      ],
+      "name": "setOwner2",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -399,7 +601,7 @@
           "type": "address"
         }
       ],
-      "name": "transferOwnership",
+      "name": "transferOwner1",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -439,13 +641,6 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "withdrawUTH2",
-      "outputs": [],
-      "stateMutability": "nonpayable",
       "type": "function"
     }
   ]
