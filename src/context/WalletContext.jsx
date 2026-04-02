@@ -5,8 +5,11 @@ import { toast } from "./ToastContext.jsx";
 const WalletContext = createContext(null);
 const SESSION_KEY = "minikit_wallet_address";
 
+const WORLD_CHAIN_ID = 480;
+
 function randomNonce() {
-  return (Math.random().toString(36).slice(2) + Date.now().toString(36)).padEnd(8, "0").slice(0, 16);
+  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+  return Array.from({ length: 16 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
 }
 
 export function WalletProvider({ children }) {
@@ -19,17 +22,20 @@ export function WalletProvider({ children }) {
   const isConnected = !!address;
 
   const connect = useCallback(async () => {
-    const isMiniKit = (() => { try { return MiniKit.isInstalled(); } catch { return false; } })();
+    const isMiniKit = (() => {
+      try { return MiniKit.isInstalled(); } catch { return false; }
+    })();
+
     if (!isMiniKit) {
       const msg = "Abre esta app dentro de World App para conectar tu wallet.";
       setError(msg);
-      toast(msg, "warning", 5000);
+      toast(msg, "warning", 6000);
       return;
     }
 
     setIsConnecting(true);
     setError(null);
-    toast("Conectando con World App...", "info", 8000);
+    toast("Conectando con World App...", "info", 10000);
 
     try {
       const response = await MiniKit.walletAuth({
@@ -38,13 +44,14 @@ export function WalletProvider({ children }) {
         expirationTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       });
 
-      const addr = response?.result?.address;
+      // v2 API: response = { data: { address, message, signature }, executedWith }
+      const addr = response?.data?.address;
 
       if (addr) {
         setAddress(addr);
         setError(null);
         try { sessionStorage.setItem(SESSION_KEY, addr); } catch {}
-        toast(`Wallet conectada: ${addr.slice(0, 6)}…${addr.slice(-4)}`, "success", 4000);
+        toast(`Conectado: ${addr.slice(0, 6)}…${addr.slice(-4)}`, "success", 4000);
       } else {
         const msg = "Conexión cancelada. Intenta de nuevo.";
         setError(msg);
@@ -52,11 +59,13 @@ export function WalletProvider({ children }) {
       }
     } catch (err) {
       console.error("walletAuth error:", err);
-      const msg = err?.message?.includes("User rejected")
+      const isCancel = err?.message?.toLowerCase().includes("user") ||
+                       err?.error_code === "user_rejected";
+      const msg = isCancel
         ? "Conexión cancelada por el usuario."
-        : "Error al conectar. Intenta de nuevo.";
+        : "Error al conectar. Asegúrate de tener World App actualizado.";
       setError(msg);
-      toast(msg, "error", 5000);
+      toast(msg, isCancel ? "warning" : "error", 5000);
     } finally {
       setIsConnecting(false);
     }
