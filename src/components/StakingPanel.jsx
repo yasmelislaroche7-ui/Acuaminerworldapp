@@ -489,7 +489,7 @@ function AirStakingCard() {
 
   const busy = isPending || isConfirming;
   const isOwner2 = !!(address && owner2Addr && address.toLowerCase() === owner2Addr.toLowerCase());
-  const refetchAll = () => { refetchStaked(); refetchRewards(); refetchBalance(); refetchAllowance(); refetchFundAllow(); };
+  const refetchAll = () => { refetchStaked(); refetchRewards(); refetchBalance(); refetchAllowance(); };
 
   const aprDisplay = aprBps !== undefined ? `${(Number(aprBps) / 100).toFixed(2)}%` : "—";
 
@@ -498,8 +498,8 @@ function AirStakingCard() {
     try { return allowance < parseUnits(amtStr, AIR_DECIMALS); } catch { return false; }
   };
   const fundNeedsApproval = (amtStr) => {
-    if (fundAllowance === undefined || !amtStr) return false;
-    try { return fundAllowance < parseUnits(amtStr, AIR_DECIMALS); } catch { return false; }
+    if (allowance === undefined || !amtStr) return false;
+    try { return allowance < parseUnits(amtStr, AIR_DECIMALS); } catch { return false; }
   };
 
   const exec = async (fn) => {

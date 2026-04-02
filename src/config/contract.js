@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0xaAF4965b640730dECe37638BE429a48Fe4E0BCCE";
+export const CONTRACT_ADDRESS = "0xaaf4965b640730dece37638be429a48fe4e0bcce";
 
 export const CONTRACT_ABI = [
   {"inputs":[{"internalType":"address","name":"_WLD","type":"address"},{"internalType":"address","name":"_timeToken","type":"address"},{"internalType":"address","name":"_timeStaking","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},

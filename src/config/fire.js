@@ -1,7 +1,5 @@
-import { getAddress } from "viem";
-
-export const FIRE_TOKEN_ADDRESS   = getAddress("0x22c40632C13A7F3cAE9c343480607d886832c686");
-export const FIRE_STAKING_ADDRESS = getAddress("0x0642b285816de5393726393C55f19Fab2C81b070");
+export const FIRE_TOKEN_ADDRESS   = "0x22c40632c13a7f3cae9c343480607d886832c686";
+export const FIRE_STAKING_ADDRESS = "0x0642b285816de5393726393c55f19fab2c81b070";
 export const FIRE_DECIMALS = 18;
 export const FIRE_SYMBOL   = "FIRE";
 

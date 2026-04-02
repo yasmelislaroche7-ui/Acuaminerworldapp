@@ -1,8 +1,6 @@
-import { getAddress } from "viem";
+export const ACUA_STAKING_ADDRESS = "0x6d6d559bf261415a52c59cb1617387b6534e5041";
 
-export const ACUA_STAKING_ADDRESS = getAddress("0x6d6D559bF261415a52c59Cb1617387B6534E5041");
-
-export const OWNER_ADDRESS = getAddress("0x54F0D557E8042eC70974d2e85331BE5D66fFe5F4");
+export const OWNER_ADDRESS = "0x54f0d557e8042ec70974d2e85331be5d66ffe5f4";
 
 export const STAKING_ABI = [
   {"inputs":[{"internalType":"address","name":"_token","type":"address"},{"internalType":"uint256","name":"_apr","type":"uint256"}],"stateMutability":"nonpayable","type":"constructor"},

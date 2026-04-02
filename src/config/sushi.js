@@ -1,5 +1,5 @@
-export const SUSHI_TOKEN_ADDRESS  = "0xab09A728E53d3d6BC438BE95eeD46Da0Bbe7FB38";
-export const SUSHI_STAKING_ADDRESS = "0x500EC550891D8f03DdD32d5854A3B15d052299Ca";
+export const SUSHI_TOKEN_ADDRESS   = "0xab09a728e53d3d6bc438be95eed46da0bbe7fb38";
+export const SUSHI_STAKING_ADDRESS = "0x500ec550891d8f03ddd32d5854a3b15d052299ca";
 
 export const SUSHI_TOKEN_ABI = [
   { inputs: [], name: "claim", outputs: [], stateMutability: "nonpayable", type: "function" },

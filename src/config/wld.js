@@ -1,8 +1,7 @@
-import { getAddress } from "viem";
 import { SIMPLE_STAKING_ABI, ERC20_ABI } from "./simple_staking_abi.js";
 
-export const WLD_TOKEN_ADDRESS   = getAddress("0x2cFc85d8E48F8EAB294be644d9E25C3030863003");
-export const WLD_STAKING_ADDRESS = getAddress("0xba3f717C83241E21e3026dBFB69ac2167f11Cf0A");
+export const WLD_TOKEN_ADDRESS   = "0x2cfc85d8e48f8eab294be644d9e25c3030863003";
+export const WLD_STAKING_ADDRESS = "0xba3f717c83241e21e3026dbfb69ac2167f11cf0a";
 export const WLD_DECIMALS = 18;
 export const WLD_SYMBOL   = "WLD";
 

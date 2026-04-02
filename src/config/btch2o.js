@@ -1,7 +1,5 @@
-import { getAddress } from "viem";
-
-export const BTCH2O_TOKEN_ADDRESS   = getAddress("0xecc4dae4dc3d359a93046bd944e9ee3421a6a484");
-export const BTCH2O_STAKING_ADDRESS = getAddress("0x6d75242B5288b722C6e7f13CD706BfB8880BFF4A");
+export const BTCH2O_TOKEN_ADDRESS   = "0xecc4dae4dc3d359a93046bd944e9ee3421a6a484";
+export const BTCH2O_STAKING_ADDRESS = "0x6d75242b5288b722c6e7f13cd706bfb8880bff4a";
 export const BTCH2O_DECIMALS = 18;
 export const BTCH2O_SYMBOL   = "BTCH2O";
 
