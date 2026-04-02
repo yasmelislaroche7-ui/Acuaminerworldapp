@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { MiniKit } from 'minikit'; // Only using MiniKit for World App Wallet authentication
+import { MiniKit } from '@worldcoin/minikit-js';
 
 const WalletContext = createContext();
 
@@ -7,12 +7,12 @@ export const WalletProvider = ({ children }) => {
     const [wallet, setWallet] = useState(null);
 
     useEffect(() => {
-        const miniKit = new MiniKit();
-        miniKit.initialize();
-
-        // Add authentication logic here using MiniKit 
-
-        setWallet(miniKit.getWallet()); // Replace with actual method to get the wallet from MiniKit
+        if (MiniKit.isInstalled()) {
+            const walletAddress = MiniKit.walletAddress;
+            if (walletAddress) {
+                setWallet(walletAddress);
+            }
+        }
     }, []);
 
     return (
