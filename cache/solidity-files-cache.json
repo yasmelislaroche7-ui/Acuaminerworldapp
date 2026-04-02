@@ -1,0 +1,157 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/runner/workspace/contracts/BTCH2OStaking.sol": {
+      "lastModificationDate": 1775146329484,
+      "contentHash": "710781cafee91e59b6e3ce61ec4cb02c",
+      "sourceName": "contracts/BTCH2OStaking.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "BTCH2OStaking",
+        "IERC20"
+      ]
+    },
+    "/home/runner/workspace/contracts/FIREStaking.sol": {
+      "lastModificationDate": 1775146329484,
+      "contentHash": "dac79e923e7ba5a09422a0e6e77e9a53",
+      "sourceName": "contracts/FIREStaking.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.20"
+      ],
+      "artifacts": [
+        "FIREStaking",
+        "IERC20"
+      ]
+    },
+    "/home/runner/workspace/contracts/H2OMining.sol": {
+      "lastModificationDate": 1775146329484,
+      "contentHash": "e58e26c5feef2cab5bcb81be451fa5a3",
+      "sourceName": "contracts/H2OMining.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "H2OMining",
+        "IERC20"
+      ]
+    },
+    "/home/runner/workspace/contracts/UTH2Mining.sol": {
+      "lastModificationDate": 1775149670471,
+      "contentHash": "16d3b67247694b27ed6595c6f68e652c",
+      "sourceName": "contracts/UTH2Mining.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC20",
+        "UTH2Mining"
+      ]
+    }
+  }
+}

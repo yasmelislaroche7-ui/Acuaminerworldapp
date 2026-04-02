@@ -44,6 +44,9 @@ export default function Header() {
           <Link className={`nav-link ${location.pathname === "/staking" ? "active" : ""}`} to="/staking">
             Staking
           </Link>
+          <Link className={`nav-link ${location.pathname === "/mining" ? "active" : ""}`} to="/mining">
+            ⛏ Minería UTH₂
+          </Link>
           {isConnected && isOwner && (
             <Link className={`nav-link ${location.pathname === "/owner" ? "active" : ""}`} to="/owner">
               Owner

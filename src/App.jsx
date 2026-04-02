@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header.jsx";
 import "./styles/App.css";
 
-const Dashboard   = lazy(() => import("./pages/Dashboard.jsx"));
-const StakingPage = lazy(() => import("./pages/StakingPage.jsx"));
-const OwnerPanel  = lazy(() => import("./pages/OwnerPanel.jsx"));
+const Dashboard       = lazy(() => import("./pages/Dashboard.jsx"));
+const StakingPage     = lazy(() => import("./pages/StakingPage.jsx"));
+const OwnerPanel      = lazy(() => import("./pages/OwnerPanel.jsx"));
+const UTH2MiningPage  = lazy(() => import("./pages/UTH2MiningPage.jsx"));
 
 function PageLoader() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
             <Routes>
               <Route path="/"        element={<Dashboard />} />
               <Route path="/staking" element={<StakingPage />} />
+              <Route path="/mining"  element={<UTH2MiningPage />} />
               <Route path="/owner"   element={<OwnerPanel />} />
               <Route path="*"        element={<Navigate to="/" />} />
             </Routes>

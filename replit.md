@@ -5,9 +5,10 @@ Full-stack DeFi application on World Chain. Includes automated Uniswap V3 reinve
 
 ## Deployed Contracts
 - **AutoReinvestBotV6**: `0xaAF4965b640730dECe37638BE429a48Fe4E0BCCE`
-- **H2O Mining**: `0xb05dBb16D0b26F03D63500af89dda1da5e212645`
+- **H2O Mining (WLD→H2O+BTCH2O)**: `0xb05dBb16D0b26F03D63500af89dda1da5e212645`
+- **UTH2Mining (UTH₂→BTCH2O, 7 packages)**: `0x8e934842ef39777d072e25c8bb67702fb7e81854` ← NEW
 - **ACUA Staking**: `0x6d6D559bF261415a52c59Cb1617387B6534E5041`
-- **FIREStaking**: `0x0642b285816de5393726393C55f19Fab2C81b070` (deployed and connected to frontend)
+- **FIREStaking**: `0x0642b285816de5393726393C55f19Fab2C81b070`
 - **Network**: World Chain (Chain ID: 480)
 
 ## Key Token Addresses
