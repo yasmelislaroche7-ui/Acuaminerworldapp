@@ -1,26 +1,42 @@
 import { useState } from "react";
 import { MiniKit } from "@worldcoin/minikit-js";
-import { encodeFunctionData } from "viem";
 import { useWalletClient } from "wagmi";
 import { toast } from "../context/ToastContext.jsx";
 import { useTxConfirm } from "../context/TxConfirmContext.jsx";
 
-const WORLD_CHAIN_ID = 480;
-
 function friendlyMiniKitError(code) {
   switch (code) {
-    case "disallowed_operation":
-      return "Operacion no permitida en World App para este contrato. Usa una wallet externa (MetaMask).";
     case "user_rejected":
     case "user_cancelled":
-      return "Transaccion cancelada por el usuario.";
+      return "Transacción cancelada por el usuario.";
+    case "invalid_contract":
+      return "Contrato no verificado en World App. Usa una wallet externa para esta operación.";
+    case "disallowed_operation":
+    case "malicious_operation":
+      return "Operación no permitida por World App para este contrato.";
     case "insufficient_balance":
       return "Balance insuficiente en tu wallet.";
+    case "simulation_failed":
+      return "La simulación de la transacción falló. Verifica que tengas fondos suficientes.";
+    case "transaction_failed":
+      return "La transacción falló en la blockchain. Reintenta en un momento.";
+    case "daily_tx_limit_reached":
+      return "Límite diario de transacciones de World App alcanzado. Intenta mañana.";
+    case "validation_error":
+    case "input_error":
+      return "Error en los parámetros de la transacción.";
     case "network_error":
-      return "Error de red. Verifica tu conexion e intenta de nuevo.";
+      return "Error de red. Verifica tu conexión e intenta de nuevo.";
+    case "generic_error":
     default:
-      return code ? `World App rechazo la transaccion (${code}).` : "World App rechazo la transaccion.";
+      return code
+        ? `World App rechazó la transacción (${code}).`
+        : "World App rechazó la transacción.";
   }
+}
+
+function isMK() {
+  try { return MiniKit.isInstalled(); } catch { return false; }
 }
 
 export function useMiniKitWrite() {
@@ -37,16 +53,12 @@ export function useMiniKitWrite() {
     args = [],
     value,
     txMeta,
-    gas: _gas,
-    maxFeePerGas: _maxFee,
-    maxPriorityFeePerGas: _maxPrio,
   }) => {
-    // ── Show in-app confirmation dialog if txMeta is provided ──────────────────
     if (txMeta) {
       const confirmed = await confirmTx(txMeta);
       if (!confirmed) {
-        const err = new Error("Transaccion cancelada por el usuario.");
-        err.shortMessage = "Transaccion cancelada.";
+        const err = new Error("Transacción cancelada por el usuario.");
+        err.shortMessage = "Transacción cancelada.";
         throw err;
       }
     }
@@ -56,63 +68,55 @@ export function useMiniKitWrite() {
     setError(null);
 
     try {
-      const isMiniKit = (() => {
-        try { return MiniKit.isInstalled(); } catch { return false; }
-      })();
-
       let txHash;
 
-      if (isMiniKit) {
-        // ── World App / MiniKit path ──────────────────────────────────────────
-        toast("Enviando transaccion a World App...", "info", 14000);
-        const calldata = encodeFunctionData({ abi, functionName, args });
-        const txEntry  = { to: address, data: calldata };
+      if (isMK()) {
+        toast("Enviando transacción a World App…", "info", 14000);
+
+        const txEntry = {
+          address,
+          abi,
+          functionName,
+          args,
+        };
         if (value !== undefined && value !== null && value !== 0n) {
           txEntry.value = "0x" + BigInt(value).toString(16);
         }
 
-        let response;
+        let commandPayload, finalPayload;
         try {
-          response = await MiniKit.sendTransaction({
-            transactions: [txEntry],
-            chainId: WORLD_CHAIN_ID,
-          });
-        } catch (minikitErr) {
-          // MiniKit can throw synchronously or reject the promise
-          const code = minikitErr?.error_code || minikitErr?.code || minikitErr?.message;
-          const msg  = friendlyMiniKitError(code) || minikitErr?.message || "Error al enviar en World App.";
+          ({ commandPayload, finalPayload } = await MiniKit.commandsAsync.sendTransaction({
+            transaction: [txEntry],
+          }));
+        } catch (mkErr) {
+          const code = mkErr?.error_code || mkErr?.code || mkErr?.message;
+          const msg  = friendlyMiniKitError(code) || mkErr?.message || "Error al enviar en World App.";
           const err  = new Error(msg);
           err.shortMessage = msg;
           throw err;
         }
 
-        // Check for error codes in the response object (MiniKit may not throw)
-        const errorCode = response?.error_code
-          || response?.data?.error_code
-          || (response?.status === "error" ? "unknown" : null);
-
-        if (errorCode) {
-          const msg = friendlyMiniKitError(errorCode);
-          const err = new Error(msg);
+        if (!finalPayload || finalPayload.status === "error") {
+          const code = finalPayload?.error_code;
+          const msg  = friendlyMiniKitError(code);
+          const err  = new Error(msg);
           err.shortMessage = msg;
           throw err;
         }
 
-        txHash = response?.data?.userOpHash
-          || response?.data?.transactionHash
-          || response?.transactionHash
-          || response?.data?.hash;
+        txHash = finalPayload.transaction_id
+          || finalPayload.transactionHash
+          || finalPayload.transaction_hash;
 
         if (!txHash) {
-          const msg = "Transaccion rechazada o cancelada en World App.";
+          const msg = "Transacción rechazada o cancelada en World App.";
           const err = new Error(msg);
           err.shortMessage = msg;
           throw err;
         }
 
       } else if (walletClient) {
-        // ── External wallet (MetaMask / injected) path ────────────────────────
-        toast("Enviando transaccion con wallet conectada...", "info", 12000);
+        toast("Enviando transacción con wallet conectada…", "info", 12000);
         txHash = await walletClient.writeContract({
           address,
           abi,
@@ -128,7 +132,7 @@ export function useMiniKitWrite() {
       }
 
       setData(txHash);
-      toast("Transaccion enviada. Esperando confirmacion en blockchain...", "success", 7000);
+      toast("✅ Transacción enviada — confirmando en blockchain…", "success", 7000);
       return txHash;
 
     } catch (err) {
@@ -138,8 +142,8 @@ export function useMiniKitWrite() {
         err?.error_code === "user_rejected" ||
         err?.error_code === "user_cancelled";
 
-      const msg = err?.shortMessage || err?.message || "Error al enviar la transaccion.";
-      const errObj    = new Error(msg);
+      const msg = err?.shortMessage || err?.message || "Error al enviar la transacción.";
+      const errObj = new Error(msg);
       errObj.shortMessage = msg;
       setError(errObj);
       toast(msg, isCancel ? "warning" : "error", 7000);
