@@ -208,16 +208,30 @@ export default function MiningPanel() {
   const handleApproveWLD = () => exec(() => writeContractAsync({
     address: WLD_TOKEN_ADDRESS, abi: ERC20_MINIMAL_ABI,
     functionName: "approve", args: [MINING_ADDRESS, MAXUINT256],
+    txMeta: {
+      label:  "Aprobar WLD para minería",
+      amount: "Ilimitado",
+      token:  "WLD",
+    },
   }));
 
   const handleBuyPackage = () => exec(() => writeContractAsync({
     address: MINING_ADDRESS, abi: MINING_ABI,
     functionName: "buyPackage", args: [1n],
+    txMeta: {
+      label:  "Comprar paquete de minería permanente",
+      amount: priceDisplay,
+      token:  "",
+    },
   }));
 
   const handleClaim = () => exec(() => writeContractAsync({
     address: MINING_ADDRESS, abi: MINING_ABI,
     functionName: "claimRewards", args: [],
+    txMeta: {
+      label:  "Reclamar recompensas de minería",
+      amount: `${liveH2O.toFixed(4)} H2O + ${liveBTCH2O.toFixed(4)} BTCH2O`,
+    },
   }));
 
   if (!isConnected) return null;
