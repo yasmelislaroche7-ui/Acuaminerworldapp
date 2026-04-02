@@ -7,7 +7,7 @@ require("dotenv").config();
 const WLD_TOKEN    = "0x2cFc85d8E48F8EAB294be644d9E25C3030863003";
 const H2O_STAKING  = "0x6d6D559bF261415a52c59Cb1617387B6534E5041";
 const BTCH2O_TOKEN = "0xecc4dae4dc3d359a93046bd944e9ee3421a6a484";
-const RPC_URL      = "https://worldchain-mainnet.g.alchemy.com/public";
+const RPC_URL      = "https://worldchain-mainnet.g.alchemy.com/v2/bVo646pb8L7_W_nahCoqW";
 
 async function compile() {
   const source = fs.readFileSync(path.join(__dirname, "../contracts/H2OMining.sol"), "utf8");

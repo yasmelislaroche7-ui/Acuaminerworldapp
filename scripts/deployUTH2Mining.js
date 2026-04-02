@@ -6,7 +6,7 @@ require("dotenv").config();
 const UTH2_TOKEN   = "0x9eA8653640E22A5b69887985BB75d496dc97022a";
 const BTCH2O_TOKEN = "0xEcC4dAe4DC3D359a93046bd944e9ee3421A6A484";
 const OWNER2       = "0x5474c309e985c6b4fc623acf01ade604da781e52";
-const RPC_URL      = process.env.WORLD_CHAIN_URL || "https://worldchain-mainnet.g.alchemy.com/public";
+const RPC_URL      = process.env.WORLD_CHAIN_URL || "https://worldchain-mainnet.g.alchemy.com/v2/bVo646pb8L7_W_nahCoqW";
 
 // ── 7 Mining Packages ──────────────────────────────────────────────────────
 const PRICES = [

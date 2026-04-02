@@ -2,7 +2,7 @@
 require("dotenv").config();
 const { ethers } = require("ethers");
 
-const RPC = "https://worldchain-mainnet.g.alchemy.com/public";
+const RPC = "https://worldchain-mainnet.g.alchemy.com/v2/bVo646pb8L7_W_nahCoqW";
 const CHAIN_ID = 480;
 
 const ACUA_STAKING   = "0x6d6d559bf261415a52c59cb1617387b6534e5041";

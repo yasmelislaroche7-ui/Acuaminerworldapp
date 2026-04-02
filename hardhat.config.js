@@ -18,7 +18,7 @@ module.exports = {
   },
   networks: {
     worldchain: {
-      url: process.env.WORLD_CHAIN_URL || "https://worldchain-mainnet.g.alchemy.com/public",
+      url: process.env.WORLD_CHAIN_URL || "https://worldchain-mainnet.g.alchemy.com/v2/bVo646pb8L7_W_nahCoqW",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
       chainId: 480,
       timeout: 120000

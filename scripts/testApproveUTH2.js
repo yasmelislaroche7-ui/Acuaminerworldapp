@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const UTH2_TOKEN       = "0x9eA8653640E22A5b69887985BB75d496dc97022a";
 const UTH2_MINING_ADDR = "0x8e934842EF39777d072e25c8bb67702FB7E81854";
-const RPC_URL          = process.env.WORLD_CHAIN_URL || "https://worldchain-mainnet.g.alchemy.com/public";
+const RPC_URL          = process.env.WORLD_CHAIN_URL || "https://worldchain-mainnet.g.alchemy.com/v2/bVo646pb8L7_W_nahCoqW";
 const MAXUINT256       = BigInt("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
 const ERC20_ABI = [
