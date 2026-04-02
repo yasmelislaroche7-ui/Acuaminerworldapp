@@ -32,6 +32,14 @@ function fmt(val, dec = 18, dp = 4) {
   catch { return "—"; }
 }
 
+// bps: basis points on-chain (e.g. 1200 = 12% APR)
+function aprBpsToDisplay(bps) {
+  if (bps === undefined || bps === null) return { apr: "—", apy: "—" };
+  const aprPct = Number(bps) / 100;                                   // e.g. 12.00
+  const apy    = (Math.pow(1 + (aprPct / 100) / 365, 365) - 1) * 100; // daily compounding
+  return { apr: aprPct.toFixed(2), apy: apy.toFixed(2) };
+}
+
 function parseErr(e) {
   const msg = e?.shortMessage || e?.message || String(e);
   const low = msg.toLowerCase();
@@ -161,12 +169,15 @@ function AcuaStakingCard() {
         <span className="staking-label">Earn APR</span>
       </div>
       <TxMsg msg={msg} />
+      {(() => { const { apr: aprPct, apy } = aprBpsToDisplay(apr); return (
       <div className="staking-stats">
-        <div className="staking-stat"><span>APR</span><strong className="text-success">{apr ? (Number(apr) / 100).toFixed(2) : "—"}%</strong></div>
+        <div className="staking-stat"><span>APR</span><strong className="text-success">{aprPct}%</strong></div>
+        <div className="staking-stat"><span>APY (diario)</span><strong className="text-accent">{apy}%</strong></div>
         <div className="staking-stat"><span>Tu Stake</span><strong>{fmt(stakedBalance, dec)} {tokenSymbol ?? "—"}</strong></div>
         <div className="staking-stat"><span>Recompensas</span><strong className="text-accent">{fmt(pendingRewards, dec)} {tokenSymbol ?? ""}</strong></div>
         <div className="staking-stat"><span>Wallet</span><strong>{fmt(tokenBalance, dec)} {tokenSymbol ?? "—"}</strong></div>
       </div>
+      ); })()}
       <div className="staking-actions">
         <div className="staking-section">
           <label>Depositar (Stake)</label>
@@ -491,7 +502,7 @@ function AirStakingCard() {
   const isOwner2 = !!(address && owner2Addr && address.toLowerCase() === owner2Addr.toLowerCase());
   const refetchAll = () => { refetchStaked(); refetchRewards(); refetchBalance(); refetchAllowance(); };
 
-  const aprDisplay = aprBps !== undefined ? `${(Number(aprBps) / 100).toFixed(2)}%` : "—";
+  const { apr: aprDisplay, apy: apyDisplay } = aprBpsToDisplay(aprBps);
 
   const needsApproval = (amtStr) => {
     if (allowance === undefined || !amtStr) return false;
