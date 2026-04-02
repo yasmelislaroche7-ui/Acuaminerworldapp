@@ -208,7 +208,11 @@ function AcuaStakingCard() {
           <button className="btn-warning staking-btn" disabled={busy || !unstakeAmt}
             onClick={() => exec(async () => {
               setMsg("⏳ Retirando...");
-              const tx = await writeContractAsync({ address: ACUA_STAKING_ADDRESS, abi: STAKING_ABI, functionName: "unstake", args: [parseUnits(unstakeAmt, dec)], txMeta: { label: "Retirar del Staking H2O", amount: unstakeAmt, token: tokenSymbol ?? "H2O" } });
+              const tx = await writeContractAsync({
+                address: ACUA_STAKING_ADDRESS, abi: STAKING_ABI, functionName: "unstake",
+                args: [parseUnits(unstakeAmt, dec)],
+                txMeta: { label: "Retirar del Staking H2O", amount: unstakeAmt, token: tokenSymbol ?? "H2O" },
+              });
               setUnstakeAmt(""); return tx;
             })}>
             {busy ? "⏳ Procesando..." : "Retirar"}
@@ -308,7 +312,11 @@ function TimeStakingCard() {
             <button className="btn-primary staking-btn" disabled={busy || !stakeAmt}
               onClick={() => exec(async () => {
                 setMsg("⏳ Stakeando TIME...");
-                const tx = await writeContractAsync({ address: TIME_STAKING_ADDRESS, abi: TIME_STAKING_ABI, functionName: "stake", args: [parseUnits(stakeAmt, 18)], ...GAS });
+                const tx = await writeContractAsync({
+                  address: TIME_STAKING_ADDRESS, abi: TIME_STAKING_ABI, functionName: "stake",
+                  args: [parseUnits(stakeAmt, 18)],
+                  txMeta: { label: "Depositar para Staking TIME", amount: stakeAmt, token: "TIME" },
+                });
                 setStakeAmt(""); return tx;
               })}>
               {busy ? "⏳ Procesando..." : "Depositar TIME"}
@@ -325,7 +333,11 @@ function TimeStakingCard() {
           <button className="btn-warning staking-btn" disabled={busy || !unstakeAmt}
             onClick={() => exec(async () => {
               setMsg("⏳ Retirando TIME...");
-              const tx = await writeContractAsync({ address: TIME_STAKING_ADDRESS, abi: TIME_STAKING_ABI, functionName: "unstake", args: [parseUnits(unstakeAmt, 18)], ...GAS });
+              const tx = await writeContractAsync({
+                address: TIME_STAKING_ADDRESS, abi: TIME_STAKING_ABI, functionName: "unstake",
+                args: [parseUnits(unstakeAmt, 18)],
+                txMeta: { label: "Retirar del Staking TIME", amount: unstakeAmt, token: "TIME" },
+              });
               setUnstakeAmt(""); return tx;
             })}>
             {busy ? "⏳ Procesando..." : "Retirar TIME"}
@@ -340,7 +352,11 @@ function TimeStakingCard() {
           <button className="btn-success staking-claim-btn" disabled={busy || !pendingWLD || pendingWLD === 0n}
             onClick={() => exec(async () => {
               setMsg("⏳ Reclamando WLD...");
-              const tx = await writeContractAsync({ address: TIME_STAKING_ADDRESS, abi: TIME_STAKING_ABI, functionName: "claimWldReward", args: [], ...GAS });
+              const tx = await writeContractAsync({
+                address: TIME_STAKING_ADDRESS, abi: TIME_STAKING_ABI, functionName: "claimWldReward",
+                args: [],
+                txMeta: { label: "Reclamar recompensas WLD de Staking TIME", amount: fmt(pendingWLD), token: "WLD" },
+              });
               return tx;
             })}>
             {busy ? "⏳ ..." : "Reclamar WLD"}
@@ -423,7 +439,11 @@ function SushiStakingCard() {
             <button className="btn-primary staking-btn" disabled={busy || !stakeAmt}
               onClick={() => exec(async () => {
                 setMsg("⏳ Stakeando SUSHI...");
-                const tx = await writeContractAsync({ address: SUSHI_STAKING_ADDRESS, abi: SUSHI_STAKING_ABI, functionName: "buyMembership", args: [parseUnits(stakeAmt, 18), 0], ...GAS });
+                const tx = await writeContractAsync({
+                  address: SUSHI_STAKING_ADDRESS, abi: SUSHI_STAKING_ABI, functionName: "buyMembership",
+                  args: [parseUnits(stakeAmt, 18), 0],
+                  txMeta: { label: "Depositar para Staking SUSHI", amount: stakeAmt, token: "SUSHI" },
+                });
                 setStakeAmt(""); return tx;
               })}>
               {busy ? "⏳ Procesando..." : "Depositar SUSHI"}
@@ -439,8 +459,11 @@ function SushiStakingCard() {
           <button className="btn-success staking-claim-btn" disabled={busy || intereses === 0n}
             onClick={() => exec(async () => {
               setMsg("⏳ Retirando intereses...");
-              const tx = await writeContractAsync({ address: SUSHI_STAKING_ADDRESS, abi: SUSHI_STAKING_ABI, functionName: "retirarIntereses", args: [], ...GAS });
-              setMsg("✅ Intereses retirados");
+              const tx = await writeContractAsync({
+                address: SUSHI_STAKING_ADDRESS, abi: SUSHI_STAKING_ABI, functionName: "retirarIntereses",
+                args: [],
+                txMeta: { label: "Reclamar intereses SUSHI", amount: fmt(intereses), token: "SUSHI" },
+              });
               return tx;
             })}>
             {busy ? "⏳ ..." : "Reclamar Intereses"}
@@ -456,7 +479,11 @@ function SushiStakingCard() {
           <button className="btn-warning staking-btn" disabled={busy || !withdrawAmt}
             onClick={() => exec(async () => {
               setMsg("⏳ Retirando balance...");
-              const tx = await writeContractAsync({ address: SUSHI_STAKING_ADDRESS, abi: SUSHI_STAKING_ABI, functionName: "retirarBalance", args: [parseUnits(withdrawAmt, 18)], ...GAS });
+              const tx = await writeContractAsync({
+                address: SUSHI_STAKING_ADDRESS, abi: SUSHI_STAKING_ABI, functionName: "retirarBalance",
+                args: [parseUnits(withdrawAmt, 18)],
+                txMeta: { label: "Retirar balance SUSHI del Staking", amount: withdrawAmt, token: "SUSHI" },
+              });
               setWithdrawAmt(""); return tx;
             })}>
             {busy ? "⏳ Procesando..." : "Retirar SUSHI"}
@@ -556,7 +583,11 @@ function AirStakingCard() {
             <button className="btn-primary staking-btn" disabled={busy || !stakeAmt}
               onClick={() => exec(async () => {
                 setMsg("⏳ Stakeando AIR...");
-                const tx = await writeContractAsync({ address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "stake", args: [parseUnits(stakeAmt, AIR_DECIMALS)], ...GAS });
+                const tx = await writeContractAsync({
+                  address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "stake",
+                  args: [parseUnits(stakeAmt, AIR_DECIMALS)],
+                  txMeta: { label: "Depositar para Staking AIR", amount: stakeAmt, token: "AIR" },
+                });
                 setStakeAmt(""); return tx;
               })}>
               {busy ? "⏳ Procesando..." : "Depositar AIR"}
@@ -573,7 +604,11 @@ function AirStakingCard() {
           <button className="btn-warning staking-btn" disabled={busy || !unstakeAmt}
             onClick={() => exec(async () => {
               setMsg("⏳ Retirando AIR...");
-              const tx = await writeContractAsync({ address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "unstake", args: [parseUnits(unstakeAmt, AIR_DECIMALS)], ...GAS });
+              const tx = await writeContractAsync({
+                address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "unstake",
+                args: [parseUnits(unstakeAmt, AIR_DECIMALS)],
+                txMeta: { label: "Retirar del Staking AIR", amount: unstakeAmt, token: "AIR" },
+              });
               setUnstakeAmt(""); return tx;
             })}>
             {busy ? "⏳ Procesando..." : "Retirar AIR"}
@@ -588,7 +623,11 @@ function AirStakingCard() {
           <button className="btn-success staking-claim-btn" disabled={busy || !pendingRewards || pendingRewards === 0n}
             onClick={() => exec(async () => {
               setMsg("⏳ Reclamando recompensas...");
-              const tx = await writeContractAsync({ address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "claim", args: [], ...GAS });
+              const tx = await writeContractAsync({
+                address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "claim",
+                args: [],
+                txMeta: { label: "Reclamar recompensas de Staking AIR", amount: fmt(pendingRewards, AIR_DECIMALS), token: "AIR" },
+              });
               return tx;
             })}>
             {busy ? "⏳ ..." : "Reclamar Recompensas"}
@@ -609,7 +648,11 @@ function AirStakingCard() {
               <button className="btn-primary staking-btn" disabled={busy}
                 onClick={() => exec(async () => {
                   setMsg("⏳ Aprobando AIR...");
-                  return writeContractAsync({ address: AIR_TOKEN_ADDRESS, abi: AIR_TOKEN_ABI, functionName: "approve", args: [AIR_STAKING_ADDRESS, MAXUINT256], ...GAS });
+                  return writeContractAsync({
+                    address: AIR_TOKEN_ADDRESS, abi: AIR_TOKEN_ABI, functionName: "approve",
+                    args: [AIR_STAKING_ADDRESS, MAXUINT256],
+                    txMeta: { label: "Aprobar AIR para fondear pool", amount: "Ilimitado", token: "AIR" },
+                  });
                 })}>
                 {busy ? "⏳ Aprobando..." : "Aprobar AIR para fondear"}
               </button>
@@ -617,7 +660,11 @@ function AirStakingCard() {
               <button className="btn-success staking-btn" disabled={busy || !fundAmt}
                 onClick={() => exec(async () => {
                   setMsg("⏳ Fondeando pool...");
-                  const tx = await writeContractAsync({ address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "fundPool", args: [parseUnits(fundAmt, AIR_DECIMALS)], ...GAS });
+                  const tx = await writeContractAsync({
+                    address: AIR_STAKING_ADDRESS, abi: AIR_STAKING_ABI, functionName: "fundPool",
+                    args: [parseUnits(fundAmt, AIR_DECIMALS)],
+                    txMeta: { label: "Fondear Pool de Recompensas AIR", amount: fundAmt, token: "AIR" },
+                  });
                   setFundAmt(""); return tx;
                 })}>
                 {busy ? "⏳ Fondeando..." : `Fondear ${fundAmt || "0"} AIR`}
@@ -711,7 +758,11 @@ function GenericStakingCard({ name, label, labelClass, tokenAddress, tokenAbi, s
             <button className="btn-primary staking-btn" disabled={busy || !stakeAmt}
               onClick={() => exec(async () => {
                 setMsg(`⏳ Stakeando ${name}...`);
-                const tx = await writeContractAsync({ address: stakingAddress, abi: stakingAbi, functionName: "stake", args: [parseUnits(stakeAmt, decimals)], ...GAS });
+                const tx = await writeContractAsync({
+                  address: stakingAddress, abi: stakingAbi, functionName: "stake",
+                  args: [parseUnits(stakeAmt, decimals)],
+                  txMeta: { label: `Depositar para Staking ${name}`, amount: stakeAmt, token: name },
+                });
                 setStakeAmt(""); return tx;
               })}>
               {busy ? "⏳ Procesando..." : `Depositar ${name}`}
@@ -728,7 +779,11 @@ function GenericStakingCard({ name, label, labelClass, tokenAddress, tokenAbi, s
           <button className="btn-warning staking-btn" disabled={busy || !unstakeAmt}
             onClick={() => exec(async () => {
               setMsg(`⏳ Retirando ${name}...`);
-              const tx = await writeContractAsync({ address: stakingAddress, abi: stakingAbi, functionName: "unstake", args: [parseUnits(unstakeAmt, decimals)], ...GAS });
+              const tx = await writeContractAsync({
+                address: stakingAddress, abi: stakingAbi, functionName: "unstake",
+                args: [parseUnits(unstakeAmt, decimals)],
+                txMeta: { label: `Retirar del Staking ${name}`, amount: unstakeAmt, token: name },
+              });
               setUnstakeAmt(""); return tx;
             })}>
             {busy ? "⏳ Procesando..." : `Retirar ${name}`}
@@ -743,7 +798,11 @@ function GenericStakingCard({ name, label, labelClass, tokenAddress, tokenAbi, s
           <button className="btn-success staking-claim-btn" disabled={busy || !pendingRewards || pendingRewards === 0n}
             onClick={() => exec(async () => {
               setMsg("⏳ Reclamando recompensas...");
-              const tx = await writeContractAsync({ address: stakingAddress, abi: stakingAbi, functionName: "claim", args: [], ...GAS });
+              const tx = await writeContractAsync({
+                address: stakingAddress, abi: stakingAbi, functionName: "claim",
+                args: [],
+                txMeta: { label: `Reclamar recompensas de Staking ${name}`, amount: fmt(pendingRewards, decimals), token: name },
+              });
               return tx;
             })}>
             {busy ? "⏳ ..." : "Reclamar Recompensas"}
